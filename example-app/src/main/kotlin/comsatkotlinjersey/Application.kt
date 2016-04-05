@@ -15,18 +15,15 @@ import javax.ws.rs.ext.Provider
  * Created by Dan Pallas on 4/3/16.
  */
 
-class Application {
-
-    fun init() {
-        val server = Server(8080)
-        val handler = ServletContextHandler()
-        handler.contextPath = ""
-        val servletHolder = ServletHolder(ServletContainer(AppConfig()))
-        handler.addServlet(servletHolder, "/*")
-        server.handler = handler
-        server.start()
-        server.join()
-    }
+fun init() {
+    val server = Server(8080)
+    val handler = ServletContextHandler()
+    handler.contextPath = ""
+    val servletHolder = ServletHolder(ServletContainer(AppConfig()))
+    handler.addServlet(servletHolder, "/*")
+    server.handler = handler
+    server.start()
+    server.join()
 }
 
 class AppConfig : ResourceConfig {
@@ -44,7 +41,8 @@ class KotlinJacksonProvider: ContextResolver<ObjectMapper> {
     }
 }
 
-
 fun main(args: Array<String>) {
-    Application().init()
+    init()
+    /*separate function from init for dependency injection. Currently, init doesn't take any arguments now, but it
+    could take a guice injector or manual dependency injection arguments. */
 }
